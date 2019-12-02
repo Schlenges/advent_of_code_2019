@@ -100,18 +100,25 @@ const input = `
   94731
   147480`
 
-const moduleArray = input.split('\n')
+const modulesArray = input.split('\n')
 
-const calcModuleFuel = (mass) => Math.floor(mass/3)-2
+const calcModuleFuel = (mass) => {
+  const extraMass = () => Math.floor(mass/3)-2
+  let fuel = 0
+ 
+  while(extraMass() > 0){
+    fuel += extraMass()
+    mass = extraMass()
+  }
+  
+  return fuel
+}
 
 const calcFuel = (modules) => {
-  let fuel = 0;
-  
-  for(module of modules){
-    fuel += calcModuleFuel(module)
-  }
+  let fuel = 0
+  modules.map(module => fuel += calcModuleFuel(module))
   
   console.log(fuel)
 }
 
-calcFuel(moduleArray)
+calcFuel(modulesArray)

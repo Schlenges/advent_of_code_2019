@@ -17,7 +17,7 @@ public class CalcFuel {
     }
 
     public static List<Integer> readFile() throws IOException {
-        String file = "src/input.txt";
+        String file = "input.txt";
         Scanner scanner = new Scanner(new File((file)));
         List<Integer> modulesArray = new ArrayList<Integer>();
 

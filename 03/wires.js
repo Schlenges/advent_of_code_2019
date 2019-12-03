@@ -33,11 +33,13 @@ const getCoordinates = (input) => {
 const findIntersection = (wire1, wire2) => {
   let path1 = getCoordinates(wire1)
   let path2 = new Map(getCoordinates(wire2).map(([coord, steps]) => [coord.toString(), steps]))
+  
   let intersections = path1.filter(([coord]) => path2.has(coord.toString()))
-  let distance = Math.min(...intersections.map(([coord]) => Math.abs(coord[0]) + Math.abs(coord[1])))
-  let combinedSteps = Math.min(...intersections.map(([coord, steps]) => path2.get(coord.toString()) + steps))
+  
+  let distance = ([coord]) => Math.abs(coord[0]) + Math.abs(coord[1])
+  let combinedSteps = ([coord, steps]) => path2.get(coord.toString()) + steps
 
-  return combinedSteps
+  return Math.min(...intersections.map((section) => combinedSteps(section)))
 }
 
 let [wire1, wire2] = getWirePaths(input)

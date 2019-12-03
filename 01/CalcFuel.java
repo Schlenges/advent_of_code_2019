@@ -25,6 +25,7 @@ public class CalcFuel {
             modulesArray.add(Integer.parseInt(scanner.next()));
         }
 
+        scanner.close();
         return modulesArray;
     }
 

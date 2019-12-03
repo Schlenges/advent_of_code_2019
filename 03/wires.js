@@ -16,13 +16,14 @@ const getCoordinates = (input) => {
   let coordinates = []
   let x = 0
   let y = 0
+  let totalSteps = 0
 
   input.map(({direction, steps}) => {
     for(let step = 1; step <= steps; step++){
       direction == "R" ? x++ : direction == "L" ? x-- : null;
       direction == "U" ? y++ : direction == "D" ? y-- : null;
-  
-      coordinates.push([x, y])
+      totalSteps++
+      coordinates.push([[x, y], totalSteps])
     }
   })
 
@@ -31,11 +32,12 @@ const getCoordinates = (input) => {
 
 const findIntersection = (wire1, wire2) => {
   let path1 = getCoordinates(wire1)
-  let path2 = new Set(getCoordinates(wire2).map(val => val.toString()))
-  let intersections = path1.filter((coordinate) => path2.has(coordinate.toString()))
-  let distance = Math.min(...intersections.map((coord) => Math.abs(coord[0]) + Math.abs(coord[1])))
+  let path2 = new Map(getCoordinates(wire2).map(([coord, steps]) => [coord.toString(), steps]))
+  let intersections = path1.filter(([coord]) => path2.has(coord.toString()))
+  let distance = Math.min(...intersections.map(([coord]) => Math.abs(coord[0]) + Math.abs(coord[1])))
+  let combinedSteps = Math.min(...intersections.map(([coord, steps]) => path2.get(coord.toString()) + steps))
 
-  return distance
+  return combinedSteps
 }
 
 let [wire1, wire2] = getWirePaths(input)

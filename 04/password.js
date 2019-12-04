@@ -20,7 +20,10 @@ const checkCriteria = (values) => {
   let increasing = true
   
   for(let i = 0; i < values.length; i++){
-    if(values[i] === values[i+1]){
+    let prevNotSame = values[i] != values[i-1]
+    let nextNotSame = values[i+1] != values[i+2]
+
+    if(values[i] === values[i+1] && prevNotSame && nextNotSame){
       twoAdjacent = true
     }
 
